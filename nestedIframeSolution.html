@@ -1,0 +1,36 @@
+<p>The best solution is to avoid direct DOM manipulation from the child iframe into the parent. Instead, use the `postMessage` API for communication between iframes. This provides a controlled and secure method for data exchange.</p><p>Here's how you can modify the code to use `postMessage`:</p><pre><code>&lt;iframe src="parent.html"&gt;&lt;/iframe&gt;</code></pre><p><b>parent.html:</b></p><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Parent Iframe&lt;/title&gt;
+&lt;script&gt;
+  window.addEventListener('message', function(event) {
+    if (event.source === document.getElementById('childIframe').contentWindow) {
+      if (event.data === 'hideContent') {
+        document.getElementById('content').style.display = 'none';
+      }
+      if (event.data === 'changeBackground') {
+        document.body.style.backgroundColor = 'red';
+      }
+    }
+  }, false);
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="content"&gt;This is some content&lt;/div&gt;
+  &lt;iframe src="child.html" id="childIframe"&gt;&lt;/iframe&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p><b>child.html:</b></p><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Child Iframe&lt;/title&gt;
+&lt;script&gt;
+  window.onload = function() {
+    window.postMessage('hideContent', '*');
+    window.postMessage('changeBackground', '*');
+  };
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;I'm the child iframe!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>This approach ensures that the parent iframe maintains control over its own DOM, improving security and preventing unexpected behavior.</p>

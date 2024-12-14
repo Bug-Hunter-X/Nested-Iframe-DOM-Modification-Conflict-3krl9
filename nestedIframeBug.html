@@ -1,0 +1,25 @@
+<p>This is a common error in HTML, but it can be quite difficult to track down.  It occurs when using nested iframes, specifically where the inner iframe's content loads and modifies the parent iframe's DOM. This can lead to unexpected behavior and conflicts, resulting in parts of the page being hidden or misaligned.</p><p>The code below demonstrates a simplified example. The outer iframe loads a page that contains an inner iframe. The inner iframe's content dynamically modifies the body's style and the elements within the parent iframe.</p><pre><code>&lt;iframe src="parent.html"&gt;&lt;/iframe&gt;</code></pre><p><b>parent.html:</b></p><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Parent Iframe&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="content"&gt;This is some content&lt;/div&gt;
+  &lt;iframe src="child.html" id="childIframe"&gt;&lt;/iframe&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p><b>child.html</b></p><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Child Iframe&lt;/title&gt;
+&lt;script&gt;
+  window.onload = function() {
+    // Dynamically modify the parent document
+    parent.document.getElementById('content').style.display = 'none';
+    parent.document.body.style.backgroundColor = 'red';
+  };
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;I'm the child iframe!&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>

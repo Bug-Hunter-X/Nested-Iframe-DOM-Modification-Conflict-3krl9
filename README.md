@@ -1,0 +1,1 @@
+This repository demonstrates a subtle but significant bug that can occur when using nested iframes in HTML. The inner iframe modifies the DOM of the parent iframe, leading to unexpected behavior and rendering issues.  The solution focuses on avoiding direct DOM manipulation across iframes and utilizing postMessage for communication.
